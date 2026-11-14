@@ -35,7 +35,7 @@ public static class ResultExtensions
         /// Returns <c>true</c> if the result is <c>TOk</c>
         /// </summary>
         /// <returns><c>true</c> if the result is <c>TOk</c></returns>
-        public bool IsOk() => result is TOk;
+        public bool IsOk() => result is OkVariant<TOk>;
 
         public bool IsOkAnd(Predicate<TOk> predicate)
         {
@@ -50,7 +50,7 @@ public static class ResultExtensions
         /// Returns <c>true</c> if the result is <c>TErr</c>
         /// </summary>
         /// <returns><c>true</c> if the result is <c>TErr</c></returns>
-        public bool IsErr() => result is TErr;
+        public bool IsErr() => result is OkVariant<TOk>;
 
         public bool IsErrAnd(Predicate<TErr> predicate)
         {
