@@ -10,7 +10,6 @@
         <Nullable>enable</Nullable>
         <GenerateDocumentationFile>true</GenerateDocumentationFile>
         <DebugType>embedded</DebugType>
-        <PackageLicenseFile>LICENSE</PackageLicenseFile> 
     </PropertyGroup>
 
 </Project>

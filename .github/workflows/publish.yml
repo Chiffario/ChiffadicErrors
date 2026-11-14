@@ -1,0 +1,34 @@
+name: Publish
+
+on:
+  push:
+    tags:
+      - 'v*'
+jobs:
+  build-and-publish:
+    permissions:
+      id-token: write  # enable GitHub OIDC token issuance for this job
+    
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-dotnet@v4
+        with:
+          dotnet-version: 11.0.x
+
+      - name: dotnet pack
+        run: |
+          VERSION=${GITHUB_REF_NAME#v}
+          dotnet pack -c Release /p:Version=$VERSION -o bin/Release
+      
+      # Get a short-lived NuGet API key
+      - name: NuGet login (OIDC → temp API key)
+        uses: NuGet/login@v1
+        id: login
+        with:
+          user: Chiffa # Recommended: use a secret like ${{ secrets.NUGET_USER }} for your nuget.org username (profile name), NOT your email address
+    
+      # Push the package
+      - name: NuGet push
+        run: dotnet nuget push "bin/Release/ChiffadicErrors.${GITHUB_REF_NAME#v}.nupkg" --api-key ${{steps.login.outputs.NUGET_API_KEY}} --source https://api.nuget.org/v3/index.json
