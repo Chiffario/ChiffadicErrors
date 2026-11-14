@@ -50,7 +50,7 @@ public static class ResultExtensions
         /// Returns <c>true</c> if the result is <c>TErr</c>
         /// </summary>
         /// <returns><c>true</c> if the result is <c>TErr</c></returns>
-        public bool IsErr() => result is OkVariant<TOk>;
+        public bool IsErr() => result is ErrorVariant<TErr>;
 
         public bool IsErrAnd(Predicate<TErr> predicate)
         {
